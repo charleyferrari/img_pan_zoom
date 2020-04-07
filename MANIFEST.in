@@ -1,0 +1,7 @@
+include img_pan_zoom/img_pan_zoom.min.js
+include img_pan_zoom/img_pan_zoom.min.js.map
+include img_pan_zoom/metadata.json
+include img_pan_zoom/package-info.json
+include README.md
+include LICENSE
+include package.json

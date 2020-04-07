@@ -1,0 +1,15 @@
+Package: imgPanZoom
+Title: a dash core component that shows an panable and mouse zoomable image
+Version: 0.0.1
+Description: a dash core component that shows an panable and mouse zoomable image
+Depends: R (>= 3.0.2)
+Imports: 
+Suggests: 
+License: MIT + file LICENSE
+URL: 
+BugReports: 
+Encoding: UTF-8
+LazyData: true
+KeepSource: true
+Author: Charley Ferrari [aut]
+Maintainer: Charley Ferrari <charley@charleyferrari.com>
