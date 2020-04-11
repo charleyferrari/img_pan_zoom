@@ -8,30 +8,39 @@ import PropTypes from 'prop-types';
  * It renders an input with the property `value`
  * which is editable by the user.
  */
+
+
 export default class ImgPanZoom extends Component {
+    componentDidMount() {
+        let gkhead = new Image;
+        gkhead.src = this.props.src;
+        let canvas = this.refs.test;
+        let ctx = canvas.getContext('2d');
+        gkhead.onload = () => {
+            ctx.drawImage(gkhead,50,50);
+        }
+
+        
+
+        // console.log(ctx);
+
+        // console.log(canvas);
+        // const context = this.getContext('2d');
+      
+        // const image = new Image();
+        // image.src = "whereever-you-image-url-live.jpg";
+        // image.onload = () => {
+        //   context.drawImage(image, 0, 0, this.canvasA.width, this.canvasA.height);
+        // };
+      }
+
     render() {
-        const {id, label, setProps, value} = this.props;
+        const {id, height, width, src, setProps} = this.props;
 
         return (
-            <div id={id}>
-                ExampleComponent: {label}&nbsp;
-                <input
-                    value={value}
-                    onChange={
-                        /*
-                         * Send the new value to the parent component.
-                         * setProps is a prop that is automatically supplied
-                         * by dash's front-end ("dash-renderer").
-                         * In a Dash app, this will update the component's
-                         * props and send the data back to the Python Dash
-                         * app server if a callback uses the modified prop as
-                         * Input or State.
-                         */
-                        e => setProps({ value: e.target.value })
-                    }
-                />
-            </div>
+            <canvas ref={id} width={String(width)} height={String(height)} />
         );
+
     }
 }
 
@@ -44,14 +53,19 @@ ImgPanZoom.propTypes = {
     id: PropTypes.string,
 
     /**
-     * A label that will be printed when this component is rendered.
+     * The height is used to define the height of the canvas
      */
-    label: PropTypes.string.isRequired,
+    height: PropTypes.number,
 
     /**
-     * The value displayed in the input.
+     * The width is used to define the width of the canvas
      */
-    value: PropTypes.string,
+    width: PropTypes.number,
+
+    /**
+     * The src is the image url to be pasted in the canvas
+     */
+    src: PropTypes.string,
 
     /**
      * Dash-assigned callback that should be called to report property changes

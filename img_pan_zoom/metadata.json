@@ -11,19 +11,26 @@
         "required": false,
         "description": "The ID used to identify this component in Dash callbacks."
       },
-      "label": {
+      "height": {
         "type": {
-          "name": "string"
+          "name": "number"
         },
-        "required": true,
-        "description": "A label that will be printed when this component is rendered."
+        "required": false,
+        "description": "The height is used to define the height of the canvas"
       },
-      "value": {
+      "width": {
+        "type": {
+          "name": "number"
+        },
+        "required": false,
+        "description": "The width is used to define the width of the canvas"
+      },
+      "src": {
         "type": {
           "name": "string"
         },
         "required": false,
-        "description": "The value displayed in the input."
+        "description": "The src is the image url to be pasted in the canvas"
       },
       "setProps": {
         "type": {

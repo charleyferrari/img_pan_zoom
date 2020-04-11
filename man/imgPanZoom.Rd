@@ -10,13 +10,15 @@ ExampleComponent is an example component. It takes a property, `label`, and disp
 }
 
 \usage{
-imgPanZoom(id=NULL, label=NULL, value=NULL)
+imgPanZoom(id=NULL, height=NULL, width=NULL, src=NULL)
 }
 
 \arguments{
 \item{id}{Character. The ID used to identify this component in Dash callbacks.}
 
-\item{label}{Character. A label that will be printed when this component is rendered.}
+\item{height}{Numeric. The height is used to define the height of the canvas}
 
-\item{value}{Character. The value displayed in the input.}
+\item{width}{Numeric. The width is used to define the width of the canvas}
+
+\item{src}{Character. The src is the image url to be pasted in the canvas}
 }

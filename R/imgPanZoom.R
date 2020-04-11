@@ -1,8 +1,8 @@
 # AUTO GENERATED FILE - DO NOT EDIT
 
-imgPanZoom <- function(id=NULL, label=NULL, value=NULL) {
+imgPanZoom <- function(id=NULL, height=NULL, width=NULL, src=NULL) {
     
-    props <- list(id=id, label=label, value=value)
+    props <- list(id=id, height=height, width=width, src=src)
     if (length(props) > 0) {
         props <- props[!vapply(props, is.null, logical(1))]
     }
@@ -10,7 +10,7 @@ imgPanZoom <- function(id=NULL, label=NULL, value=NULL) {
         props = props,
         type = 'ImgPanZoom',
         namespace = 'img_pan_zoom',
-        propNames = c('id', 'label', 'value'),
+        propNames = c('id', 'height', 'width', 'src'),
         package = 'imgPanZoom'
         )
 
