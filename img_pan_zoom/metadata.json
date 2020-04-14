@@ -2,7 +2,40 @@
   "src/lib/components/ImgPanZoom.react.js": {
     "description": "ExampleComponent is an example component.\nIt takes a property, `label`, and\ndisplays it.\nIt renders an input with the property `value`\nwhich is editable by the user.",
     "displayName": "ImgPanZoom",
-    "methods": [],
+    "methods": [
+      {
+        "name": "trackTransforms",
+        "docblock": null,
+        "modifiers": [],
+        "params": [
+          {
+            "name": "ctx",
+            "type": null
+          }
+        ],
+        "returns": null
+      },
+      {
+        "name": "redraw",
+        "docblock": null,
+        "modifiers": [],
+        "params": [
+          {
+            "name": "ctx",
+            "type": null
+          },
+          {
+            "name": "canvas",
+            "type": null
+          },
+          {
+            "name": "gkhead",
+            "type": null
+          }
+        ],
+        "returns": null
+      }
+    ],
     "props": {
       "id": {
         "type": {
