@@ -18,7 +18,6 @@ export default class ImgPanZoom extends Component {
         let ctx = canvas.getContext('2d');
         this.trackTransforms(ctx);
         gkhead.onload = () => {
-            console.log(this);
             this.redraw(ctx, canvas, gkhead);
         }
 
@@ -32,7 +31,6 @@ export default class ImgPanZoom extends Component {
             lastY = evt.offsetY || (evt.pageY - canvas.offsetTop);
             dragStart = ctx.transformedPoint(lastX, lastY);
             dragged = false;
-            console.log('mousedown');
         }
 
         const onMouseMove = evt => {
@@ -42,16 +40,30 @@ export default class ImgPanZoom extends Component {
             if (dragStart) {
                 var pt = ctx.transformedPoint(lastX, lastY);
                 ctx.translate(pt.x - dragStart.x, pt.y - dragStart.y);
-                console.log(this);
                 this.redraw(ctx, canvas, gkhead);
             }
-            console.log('mousemove');
         }
 
         const onMouseUp = evt => {
             dragStart = null;
             if (!dragged) zoom(evt.shiftKey ? -1 : 1);
-            console.log('mouseup');
+        }
+
+        const SCALE_FACTOR = 1.1;
+
+        const zoom = (clicks) => {
+            const pt = ctx.transformedPoint(lastX, lastY);
+            ctx.translate(pt.x, pt.y);
+            const factor = SCALE_FACTOR ** clicks;
+            ctx.scale(factor, factor);
+            ctx.translate(-pt.x, -pt.y);
+            this.redraw(ctx, canvas, gkhead);
+        }
+
+        const handleScroll = (evt) => {
+            const delta = evt.wheelDelta ? evt.wheelDelta / 40 : evt.detail ? -evt.detail : 0;
+            if (delta) zoom(delta);
+            return evt.preventDefault() && false;
         }
 
         canvas.addEventListener('mousedown', onMouseDown, false);
@@ -59,6 +71,10 @@ export default class ImgPanZoom extends Component {
         canvas.addEventListener('mousemove', onMouseMove, false);
 
         canvas.addEventListener('mouseup', onMouseUp, false);
+
+        canvas.addEventListener('DOMMouseScroll', handleScroll, false);
+
+        canvas.addEventListener('mousewheel', handleScroll, false);
 
     }
 
@@ -136,8 +152,8 @@ export default class ImgPanZoom extends Component {
     redraw(ctx, canvas, gkhead) {
 
         // Clear the entire canvas
-        var p1 = ctx.transformedPoint(0, 0);
-        var p2 = ctx.transformedPoint(canvas.width, canvas.height);
+        const p1 = ctx.transformedPoint(0, 0);
+        const p2 = ctx.transformedPoint(canvas.width, canvas.height);
         ctx.clearRect(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y);
 
         ctx.save();
