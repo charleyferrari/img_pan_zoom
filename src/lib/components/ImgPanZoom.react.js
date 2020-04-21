@@ -14,7 +14,8 @@ export default class ImgPanZoom extends Component {
     componentDidMount() {
         let gkhead = new Image;
         gkhead.src = this.props.src;
-        let canvas = this.refs.test;
+        let the_id = this.props.id;
+        let canvas = this.refs[the_id];
         let ctx = canvas.getContext('2d');
         this.trackTransforms(ctx);
         gkhead.onload = () => {
