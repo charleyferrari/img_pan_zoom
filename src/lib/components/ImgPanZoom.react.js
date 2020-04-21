@@ -11,11 +11,17 @@ import PropTypes from 'prop-types';
 
 
 export default class ImgPanZoom extends Component {
+    constructor(props) {
+        console.log('construcotr');
+        super(props);
+    }
+
     componentDidMount() {
+        console.log('componentdidmount');
         let gkhead = new Image;
         gkhead.src = this.props.src;
         let the_id = this.props.id;
-        let canvas = this.refs[the_id];
+        let canvas = document.getElementById(the_id);
         let ctx = canvas.getContext('2d');
         this.trackTransforms(ctx);
         gkhead.onload = () => {
@@ -67,23 +73,92 @@ export default class ImgPanZoom extends Component {
             return evt.preventDefault() && false;
         }
 
-        canvas.addEventListener('mousedown', onMouseDown, false);
+        canvas.addEventListener('mousedown', onMouseDown);
 
-        canvas.addEventListener('mousemove', onMouseMove, false);
+        canvas.addEventListener('mousemove', onMouseMove);
 
-        canvas.addEventListener('mouseup', onMouseUp, false);
+        canvas.addEventListener('mouseup', onMouseUp);
 
-        canvas.addEventListener('DOMMouseScroll', handleScroll, false);
+        canvas.addEventListener('DOMMouseScroll', handleScroll);
 
-        canvas.addEventListener('mousewheel', handleScroll, false);
+        canvas.addEventListener('mousewheel', handleScroll);
 
     }
 
+    componentDidUpdate() {
+        console.log('componentdidupdate');
+        let gkhead = new Image;
+        gkhead.src = this.props.src;
+        let the_id = this.props.id;
+        let canvas = document.getElementById(the_id);
+        let ctx = canvas.getContext('2d');
+        gkhead.onload = () => {
+            this.redraw(ctx, canvas, gkhead);
+        }
+
+        let lastX = canvas.width / 2, lastY = canvas.height / 2;
+
+        let dragStart = undefined;
+        let dragged = undefined;
+
+        const onMouseDown = evt => {
+            document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
+            lastX = evt.offsetX || (evt.pageX - canvas.offsetLeft);
+            lastY = evt.offsetY || (evt.pageY - canvas.offsetTop);
+            dragStart = ctx.transformedPoint(lastX, lastY);
+            dragged = false;
+        }
+
+        const onMouseMove = evt => {
+            lastX = evt.offsetX || (evt.pageX - canvas.offsetLeft);
+            lastY = evt.offsetY || (evt.pageY - canvas.offsetTop);
+            dragged = true;
+            if (dragStart) {
+                var pt = ctx.transformedPoint(lastX, lastY);
+                ctx.translate(pt.x - dragStart.x, pt.y - dragStart.y);
+                this.redraw(ctx, canvas, gkhead);
+            }
+        }
+
+        const onMouseUp = evt => {
+            dragStart = null;
+            if (!dragged) zoom(evt.shiftKey ? -1 : 1);
+        }
+
+        const SCALE_FACTOR = 1.1;
+
+        const zoom = (clicks) => {
+            const pt = ctx.transformedPoint(lastX, lastY);
+            ctx.translate(pt.x, pt.y);
+            const factor = SCALE_FACTOR ** clicks;
+            ctx.scale(factor, factor);
+            ctx.translate(-pt.x, -pt.y);
+            this.redraw(ctx, canvas, gkhead);
+        }
+
+        const handleScroll = (evt) => {
+            const delta = evt.wheelDelta ? evt.wheelDelta / 40 : evt.detail ? -evt.detail : 0;
+            if (delta) zoom(delta);
+            return evt.preventDefault() && false;
+        }
+
+        canvas.addEventListener('mousedown', onMouseDown);
+
+        canvas.addEventListener('mousemove', onMouseMove);
+
+        canvas.addEventListener('mouseup', onMouseUp);
+
+        canvas.addEventListener('DOMMouseScroll', handleScroll);
+
+        canvas.addEventListener('mousewheel', handleScroll);
+    }
+
     render() {
+        console.log('render');
         const { id, height, width, src, setProps } = this.props;
 
         return (
-            <canvas ref={id} width={String(width)} height={String(height)} />
+            <canvas id={id} width={String(width)} height={String(height)} />
         );
 
     }
