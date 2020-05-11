@@ -1,3 +1,6 @@
+This is a simple image pan and zoom component. Useful for cases where you want to have users easily navigate an image with scroll-to-zoom capabilities.
+
+
 # img_pan_zoom
 
 img_pan_zoom is a Dash component library.
